@@ -5,6 +5,7 @@ const mongoose=require('mongoose')
 const port=3000
 const path=require('path')
 const book_routes=require('./routes/books-routes')
+const category_routes=require('./routes/category-routes')
 
 mongoose.connect('mongodb://127.0.0.1:27017/books')
     .then(()=>{
@@ -29,6 +30,7 @@ app.get('^/$|/index(.html)?',(req,res)=>{
 })
 
 app.use('/books',book_routes)
+app.use('/category', category_routes)
 
 app.use((err, req,  res, next)=>{
     console.log(err)
@@ -49,5 +51,5 @@ app.use((err, req,  res, next)=>{
 // })
 
 app.listen(port,()=>{
-    console.log('App is running on port: ${port}')
+    console.log(`App is running on port: ${port}`)
 })

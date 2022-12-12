@@ -1,6 +1,7 @@
 //const books=require('../data/books')
 
 const Book=require('../models/Book')
+const Category = require('../models/Category')
 
 const getAllBooks=(req, res,next)=>{
     Book.find()
@@ -33,6 +34,7 @@ let book={
     // res.status(201).send(books)
 }
 
+
 const putBook=(req, res)=>{
     res.status(501).json({"reply":"put request not supported"})
     }
@@ -44,6 +46,7 @@ const deleteBook=(req, res,next)=>{
 }
 const getBook=(req, res, next)=>{
     Book.findById(req.params.id)
+    .populate('category')
     .then((book)=>{
         res.json(book)
     }).catch(next)
@@ -53,17 +56,26 @@ const getBook=(req, res, next)=>{
     // res.json(the_book)
 }
 
-const UpdateABook=(req, res)=>{
+const UpdateABook=(req, res,next)=>{
     //map:- get particular item feature from list
-   let updateBooks = books.map((item)=>{
-        if (item.id==req.params.id){
-            item.title=req.body.title,
-            item.author=req.body.author
-        }
-        return item
-    })
-    res.json('updateBooks')
+    Book.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
+
+    .then((book)=>{
+
+        res.json(book)
+
+    }).catch(next)
 }
+
+//    let updateBooks = books.map((item)=>{
+//         if (item.id==req.params.id){
+//             item.title=req.body.title,
+//             item.author=req.body.author
+//         }
+//         return item
+//     })
+//     res.json(updateBooks)
+// }
 
 const DeleteABook=(req, res)=>{
     the_book=books.filter((item)=>item.id!=req.params.id)
