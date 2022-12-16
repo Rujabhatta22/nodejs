@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express= require('express')
 const app=express()
 const logger=require('./logger')
@@ -6,6 +7,7 @@ const port=3000
 const path=require('path')
 const book_routes=require('./routes/books-routes')
 const category_routes=require('./routes/category-routes')
+const auth = require('./middleware/auth')
 const user_routes = require('./routes/user-routes')
 
 mongoose.connect('mongodb://127.0.0.1:27017/books')
@@ -20,7 +22,7 @@ app.use((req, res, next)=>{
     next() //
  
 })
-
+// express defined middleware 
 app.use(express.json())
 
 
@@ -31,12 +33,16 @@ app.get('^/$|/index(.html)?',(req,res)=>{
 })
 
 app.use('/user', user_routes)
+app.use(auth.verifyUser)
 app.use('/books',book_routes)
 app.use('/category', category_routes)
 
+
+// Error handling 
 app.use((err, req,  res, next)=>{
-    console.log(err)
-    res.status(500).json({'err': err.message})
+    console.log(err.stack)
+    if(res.statusCode == 200) res.status(500)
+    res.status(500).json({'msg': err.message})
 })
 
 // app.get('/books',(req, res)=>{
