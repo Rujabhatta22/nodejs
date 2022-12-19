@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 
+
 const verifyUser=(req, res, next)=>{
     if(!req.headers.authorization){
         let err = new Error('Authorization token is missing')

@@ -6,6 +6,7 @@ const categorySchema = mongoose.Schema({
         required: [true, "Category name is required"]
 
     },
+    
     books: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book'
