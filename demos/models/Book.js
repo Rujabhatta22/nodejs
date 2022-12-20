@@ -8,6 +8,10 @@ const reviewSchema= mongoose.Schema({
     date: {
         type:Date,
         default:Date.now
+    }, 
+    reviewer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 })
 
