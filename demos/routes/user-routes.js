@@ -23,11 +23,13 @@ router.post('/register', (req, res, next)=>{
                 let user = new User()
                 user.username = req.body.username
                 user.password = hash
+                if(req.body.role)user.role=req.body.role
                 user.save().then(user => {
                     res.status(201).json({
                         'status': 'User reqistered successfully',
                         userId: user._id,
-                        username: user.username
+                        username: user.username,
+                        role: user.role
                     })
                 }).catch(next)
             } )
@@ -48,16 +50,15 @@ router.post('/login', (req, res, next)=>{
             (err, status)=>{
                 if (err) return next(err)
                 if(!status){
-                    let (err) = new Error('Password does not match')
+                    let err=new Error('Password does not match')
                     res.status(401)
                         return next(err)
-                    
-            
                 }
 
                 let data = {
                     userId: user._id,
-                    username: user.username
+                    username: user.username,
+                    role: user.role
 
                 }
                 jwt.sign(data, process.env.SECRET, 

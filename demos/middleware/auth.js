@@ -20,6 +20,18 @@ const verifyUser=(req, res, next)=>{
     // console.log(token)
 }
 
+const verifyAdmin = (req, res, next)=>{
+    if(req.user.role != 'Admin'){
+            let err = new Error('You are not authorized')
+            res.status(403)
+            return next(err)
+        }
 
+        next()
+}
 
-module.exports = { verifyUser }
+module.exports={
+    verifyUser,
+    verifyAdmin
+}
+
