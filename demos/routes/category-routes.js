@@ -16,5 +16,4 @@ router.route('/:category_id')
     .put(CategoryController.updateCategoryById)
     .delete(CategoryController.deleteCategoryById)    
 
-
 module.exports=router    

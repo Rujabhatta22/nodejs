@@ -31,7 +31,6 @@ const deleteAllReviews=(req,res,next)=>{
     }).catch(next)
 
 }
-
 const  getReviewById = (req, res, next)=>{
     Book.findById(req.params.id)
     .then((book)=>{
@@ -39,7 +38,6 @@ const  getReviewById = (req, res, next)=>{
         res.json(the_review)
     }).catch(next)
 }
-
 const updateReviewById=(req,res,next)=>{
     Book.findById(req.params.id)
     .then((book)=>{
