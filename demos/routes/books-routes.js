@@ -27,7 +27,7 @@ router.use(verifyUser).route('/:id/reviews')
 
 router.use(verifyUser).route('/:id/reviews/:review_id')
     .get(reviewsController.getReviewById)
-    .put()
+    .put( verifyUser, reviewsController.updateReviewById)
     .post((req,res)=> res.status(501).json({'reply':"not implemented"}))
     .delete(reviewsController.deleteReviewById)
 
