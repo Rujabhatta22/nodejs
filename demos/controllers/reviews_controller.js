@@ -43,6 +43,7 @@ const updateReviewById=(req,res,next)=>{
     .then((book)=>{
         let updatedReviews= book.reviews.map((item)=> {
             if(item.id == req.params.review_id){
+                if(item.reviewer==req.user.userId)
                 item.body =req.body.body
                 
                 
