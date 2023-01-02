@@ -13,8 +13,9 @@ const verifyUser=(req, res, next)=>{
 
         //verify user
         req.user=decoded
+                console.log(decoded)
+
         next()
-        // console.log(decoded)
 
     })
     // console.log(token)
