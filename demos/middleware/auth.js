@@ -29,6 +29,13 @@ const verifyAdmin = (req, res, next)=>{
 
         next()
 }
+const verifyManager=(req,res,next)=>{
+    if(req.user.role=='Manager'|| req.user.role=='Admin'){
+        return next()
+    }
+    res.status(403)
+    next(new Error('Not Authorized'))
+}
 
 module.exports={
     verifyUser,
