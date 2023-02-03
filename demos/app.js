@@ -1,15 +1,18 @@
 require('dotenv').config()
 const express= require('express')
-const app=express()
+const cors=require('cors')
 const logger=require('./logger')
 const mongoose=require('mongoose')
-const port=3000
+const port=3005
 const path=require('path')
 const book_routes=require('./routes/books-routes')
 const category_routes=require('./routes/category-routes')
 const auth = require('./middleware/auth')
 const user_routes = require('./routes/user-routes')
 const profile_routes = require('./routes/profile-routes')
+
+const app=express()
+app.use(cors())
 
 mongoose.connect('mongodb://127.0.0.1:27017/books')
     .then(()=>{
@@ -33,11 +36,12 @@ app.get('^/$|/index(.html)?',(req,res)=>{
     // res.send("Hello world")
 })
 
-app.use('/user', user_routes)
+app.use('/user',user_routes)
 // app.use(auth.verifyUser)
 app.use('/profile', auth.verifyUser, profile_routes)
 app.use('/books',book_routes)
 app.use('/category', category_routes)
+
 
 
 // Error handling 
