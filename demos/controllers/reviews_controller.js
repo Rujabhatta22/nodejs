@@ -1,6 +1,7 @@
 const Book=require('../models/Book')
 const  getAllReviews = (req, res, next)=>{
     Book.findById(req.params.id)
+    .populate('reviews.reviewer', 'username')
     .then((book)=>{
         res.json(book.reviews)
     }).catch(next)

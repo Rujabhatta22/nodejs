@@ -2,5 +2,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "supertest": "^6.3.3"
   }
 }

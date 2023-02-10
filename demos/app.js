@@ -3,7 +3,7 @@ const express= require('express')
 const cors=require('cors')
 const logger=require('./logger')
 const mongoose=require('mongoose')
-const port=3005
+
 const path=require('path')
 const book_routes=require('./routes/books-routes')
 const category_routes=require('./routes/category-routes')
@@ -14,7 +14,15 @@ const profile_routes = require('./routes/profile-routes')
 const app=express()
 app.use(cors())
 
-mongoose.connect('mongodb://127.0.0.1:27017/books')
+
+
+const DB_URI =(process.env.NODE_ENV === 'test')
+    ? process.env.TEST_DB_URI
+    :process.env.DB_URI
+
+    console.log(DB_URI)
+
+mongoose.connect(DB_URI)
     .then(()=>{
         console.log('connected to MongoDB server')
     }).catch((err)=>console.log(err))
@@ -37,7 +45,7 @@ app.get('^/$|/index(.html)?',(req,res)=>{
 })
 
 app.use('/user',user_routes)
-// app.use(auth.verifyUser)
+app.use(auth.verifyUser)
 app.use('/profile', auth.verifyUser, profile_routes)
 app.use('/books',book_routes)
 app.use('/category', category_routes)
@@ -64,6 +72,9 @@ app.use((err, req,  res, next)=>{
 //     res.send('delete')
 // })
 
-app.listen(port,()=>{
-    console.log(`App is running on port: ${port}`)
-})
+// app.listen(port,()=>{
+//     console.log(`App is running on port: ${port}`)
+// }
+// )
+
+module.exports=app
